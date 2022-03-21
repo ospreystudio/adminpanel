@@ -15,6 +15,7 @@ export default {
 .btn {
     background-color: var(--color-primary-light);
     color: #fff;
+    margin: 20px 0;
     border-radius: 0;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1.5rem;

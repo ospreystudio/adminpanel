@@ -1,14 +1,14 @@
 <template>
     <nav class="sidebar">
         <ul class="side-nav">
-            <li class="side-nav__item">
+            <router-link :to="'/user/dashboard'"> <li class="side-nav__item">
                 <a href="#" class="side-nav__link">
                     <svg class="side-nav__icon">
                         <use xlink:href="../../../img/sprite.svg#icon-home2"></use>
                     </svg>
                     <span>Dashboard</span>
                 </a>
-            </li>
+            </li> </router-link>
             <li class="side-nav__item">
                 <a href="#" class="side-nav__link">
                     <svg class="side-nav__icon">

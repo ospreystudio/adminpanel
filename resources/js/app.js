@@ -10,9 +10,9 @@ window.Vue = require('vue').default;
 import { createApp } from "vue";
 const app = createApp({});
 import router from "./router/router";
-import store from "./store"
-import components from "./views/ui"
-
+import store from "./store";
+import components from "./views/ui";
+import 'material-design-icons-iconfont';
 
 
 components.forEach(component => {
