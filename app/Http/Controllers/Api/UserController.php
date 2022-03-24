@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\UserAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,11 +36,17 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request, UserAction $userAction)
     {
-        //
+        $user = $userAction->run($request->all());
+
+        if (!$user) {
+            return response()->json(["success" => false, "message" => 'Save user failed'], 500);
+        }
+
+        return response()->json(["success" => true, "message" => 'Save user succeeded']);
     }
 
     /**
@@ -69,9 +78,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditRequest $request, User $user)
     {
-        //
+        $user->update($request->validated());
     }
 
     /**
@@ -80,8 +89,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
     }
 }

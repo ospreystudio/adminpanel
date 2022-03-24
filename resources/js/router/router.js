@@ -3,6 +3,7 @@ import Home from "../views/layout/Home";
 import Login from "../views/auth/Login";
 import Registration from "../views/auth/Registration";
 import Dashboard from "../views/layout/Dashboard";
+import UserEdit from "../views/layout/UserEdit";
 
 const routes = [
     {
@@ -29,6 +30,13 @@ const routes = [
         component: Registration
 
     },
+    {
+        path: '/user/:id',
+        name: 'UserEdit',
+        component: UserEdit
+
+    },
+
 ]
 
 const router = createRouter({

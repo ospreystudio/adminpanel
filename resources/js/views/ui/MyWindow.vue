@@ -9,11 +9,7 @@
         <div class="popup__content">
             <slot></slot>
         </div>
-        <div class="popup__footer">
-            <my-button >Save</my-button>
-            <my-button @click="close">Close</my-button>
 
-        </div>
     </div>
 </template>
 

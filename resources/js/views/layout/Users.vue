@@ -4,12 +4,23 @@
     <main class="main-part">
 
     <my-window v-if="isPopupVisible" @close="closePopup">
+        <ul>
+            <li>
         <form>
-            <my-input type="text" placeholder="username"  />
-            <my-input type="text" placeholder="email address"  />
-            <my-input type="password" placeholder="password"  />
-            <my-input type="password" placeholder="password confirmation"  />
+            <my-input type="text" placeholder="username" v-model="user.name"  />
+            <my-input type="text" placeholder="email address" v-model="user.email"  />
+            <my-input type="password" placeholder="password" v-model="user.password"  />
+            <my-input type="password" placeholder="password confirmation" v-model="user.password_confirmation"  />
         </form>
+            </li>
+            <li>
+        <div class="footer">
+            <my-button @click="addUser">Add</my-button>
+            <my-button >Update</my-button>
+
+        </div>
+            </li>
+        </ul>
     </my-window>
 
 
@@ -36,10 +47,12 @@
             <td>{{ user.email }}</td>
             <td>{{ user.password }}</td>
             <td>
-                <my-button class="status status-edit" @click="popup">  Edit </my-button>
+            <router-link :to="{name: 'UserEdit', params: {id: user.id}}">
+                <my-button class="status status-edit">  Edit </my-button>
+            </router-link>
             </td>
             <td>
-                <my-button class="status status-delete"> Delete </my-button>
+                <my-button class="status status-delete" @click="deleteUser(user.id)"> Delete </my-button>
             </td>
             <td></td>
         </tr>
@@ -53,7 +66,7 @@
 
 <script>
 
-// import MyWindow from "../ui/MyWindow";
+import axios from "../../../axios/axios-instance";
 export default {
     name: "Users",
     components: {
@@ -61,7 +74,13 @@ export default {
     },
     data() {
         return {
-            isPopupVisible: false
+            isPopupVisible: false,
+            user: {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
+            }
         }
     },
     created() {
@@ -73,6 +92,14 @@ export default {
         },
         closePopup() {
             this.isPopupVisible = false
+        },
+        addUser() {
+            this.$store.dispatch('users/addUser', this.user)
+        },
+        deleteUser(id) {
+            axios.delete('/api/users/' + id).then(res =>{
+                this.$store.dispatch('users/getUsers')
+            })
         }
     },
     computed: {
@@ -178,6 +205,12 @@ table {
 
     }
 
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 </style>

@@ -12,6 +12,21 @@ const actions = {
         }).catch(error => {
             console.log(error)
         });
+    },
+    addUser({}, user) {
+        axios.post('/api/users', {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            password_confirmation: user.password_confirmation
+        }) .then(response => {
+            if(response.data) {
+                window.location.replace("/user/dashboard")
+                console.log(response)
+            }
+        }).catch((error) => {
+            console.log(error.response)
+        })
     }
 }
 
