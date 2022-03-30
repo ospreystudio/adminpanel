@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Actions\UserAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditRequest;
-use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\PermissionResource;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
-class UserController extends Controller
+class PermissionController extends Controller
 {
+
+    private $permission;
+
+    function __construct(Permission $permission)
+    {
+
+        $this->permission = $permission;
+    }
 
     /**
      * Display a listing of the resource.
@@ -20,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::all());
+        return PermissionResource::collection($this->permission->all());
     }
 
     /**
@@ -37,22 +42,11 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request, UserAction $userAction)
+    public function store(Request $request)
     {
-        $user = $userAction->run($request->all());
-
-        if ($request->has('role')) {
-            $user->assignRole($request->input('role'));
-        }
-
-        if ($request->has('permissions')) {
-            $user->givePermissionTo(collect($request->permissions)->pluck('id')->toArray());
-        }
-
-
-        return response(['message'=>'User Created', 'user'=>$user]);
+        //
     }
 
     /**
@@ -84,9 +78,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditRequest $request, User $user)
+    public function update(Request $request, $id)
     {
-        $user->update($request->validated());
+        //
     }
 
     /**
@@ -95,10 +89,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
-
-
+        //
     }
 }

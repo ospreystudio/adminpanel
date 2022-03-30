@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\MainController;
 use Illuminate\Http\Request;
@@ -25,3 +26,4 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 });
 
 Route::apiResource('users', UserController::class);
+Route::apiResource('roles', RoleController::class);
