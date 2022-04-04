@@ -4,6 +4,11 @@ import Login from "../views/auth/Login";
 import Registration from "../views/auth/Registration";
 import Dashboard from "../views/layout/Dashboard";
 import UserEdit from "../views/layout/UserEdit";
+import Permissions from "../views/layout/Permissions";
+import EditPermissions from "../views/layout/EditPermissions";
+import Management from "../views/layout/Management";
+import ManagementEdit from "../views/layout/ManagementEdit";
+
 
 const routes = [
     {
@@ -16,6 +21,24 @@ const routes = [
         path: '/user/dashboard',
         name: 'Dashboard',
         component: Dashboard
+
+    },
+    {
+        path: '/user/permissions',
+        name: 'Permissions',
+        component: Permissions
+
+    },
+    {
+        path: '/user/management',
+        name: 'Management',
+        component: Management
+
+    },
+    {
+        path: '/management/:id',
+        name: 'ManagementEdit',
+        component: ManagementEdit
 
     },
     {
@@ -34,6 +57,12 @@ const routes = [
         path: '/user/:id',
         name: 'UserEdit',
         component: UserEdit
+
+    },
+    {
+        path: '/permissions/:id',
+        name: 'EditPermissions',
+        component: EditPermissions
 
     },
 

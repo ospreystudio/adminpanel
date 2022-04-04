@@ -1,11 +1,11 @@
 import axios from '../../../axios/axios-instance'
 
 const state = {
-
+    errors: [],
 }
 
 const actions = {
-    loginUser({}, user) {
+    loginUser({}, user, ctx) {
         return new Promise((resolve) => {
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/login', {
@@ -16,9 +16,13 @@ const actions = {
                         if (response.data) {
                             localStorage.setItem('x-token', response.config.headers['X-XSRF-TOKEN'])
                             window.location.replace("/")
-                            console.log(response) }
+                            console.log(response)
+                        }
                     }) .catch((error) => {
-                    console.log(error.response)
+                        console.log(error.response)
+                    if (error.response.status === 422) {
+                        ctx.commit('setErrors', error.response.data.errors)
+                    } console.log(this.errors)
                 })
 
             });
@@ -37,7 +41,8 @@ const actions = {
                         if (response.data) {
                             localStorage.setItem('x-token', response.config.headers['X-XSRF-TOKEN'])
                             window.location.replace("/")
-                            console.log(response) }
+                            // console.log(response)
+                        }
                     }) .catch((error) => {
                     console.log(error.response)
                 })
@@ -56,11 +61,15 @@ const actions = {
 }
 
 const mutations = {
-
+    setErrors(state, invalidCredentials) {
+        state.errors = invalidCredentials
+    },
 }
 
 const getters = {
-
+    errors(state) {
+        return state.errors
+    },
 }
 
 

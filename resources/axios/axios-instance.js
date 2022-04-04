@@ -17,8 +17,12 @@ instance.interceptors.response.use({}, error => {
                 localStorage.removeItem('x-token')
             }
             window.location.replace('/user/login')
-
     }
+    // else if (error.response.status ===422 || error.response.status ===500) {
+    //     console.log(error.response.data)
+    // }
 })
+
+
 
 export default instance

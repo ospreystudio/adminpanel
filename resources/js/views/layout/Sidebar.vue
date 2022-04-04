@@ -9,22 +9,24 @@
                     <span>Dashboard</span>
                 </a>
             </li> </router-link>
-            <li class="side-nav__item">
+            <router-link :to="'/user/management'">    <li class="side-nav__item">
                 <a href="#" class="side-nav__link">
                     <svg class="side-nav__icon">
                         <use xlink:href="../../../img/sprite.svg#icon-users"></use>
                     </svg>
                     <span>Management</span>
                 </a>
-            </li>
+            </li></router-link>
+            <router-link :to="'/user/permissions'">
             <li class="side-nav__item">
                 <a href="#" class="side-nav__link">
                     <svg class="side-nav__icon">
                         <use xlink:href="../../../img/sprite.svg#icon-cog"></use>
                     </svg>
-                    <span>Settings</span>
+                    <span>Permissions</span>
                 </a>
             </li>
+            </router-link>
         </ul>
         <div class="legal">
             &copy; 2022. by Jonas Schmedtmann. All right reserved.

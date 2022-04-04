@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\MainController;
@@ -27,3 +28,4 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('roles', RoleController::class);
+Route::apiResource('permissions', PermissionController::class);

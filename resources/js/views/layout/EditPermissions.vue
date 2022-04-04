@@ -1,24 +1,17 @@
 <template>
     <div class="user-page">
-    <ul>
-        <li>
-            <form>
-                <h1>Edit User</h1>
-                <my-input type="text" placeholder="username" v-model="user.name" />
-                <my-input type="text" placeholder="email address" v-model="user.email" />
-                <h2 style="color: #cccccc; margin: 10px 10px">Роль</h2>
-                <select v-model="user.role.name" class="select">
-                    <option disabled value="">Выберите роль</option>
-                    <option v-for="role in getRoles" :key="role.id">
-                        {{ role.name }}
-                    </option>
-                </select>
-            </form>
-        </li>
-        <li>
-            <my-button @click="updateUsers">Update</my-button>
-        </li>
-    </ul>
+        <ul>
+            <li>
+                <form>
+                    <h1>Edit Permission</h1>
+                    <my-input type="text" placeholder="update permission" v-model="permission.name" />
+                    <h2 style="color: #cccccc; margin: 10px 10px">Permission</h2>
+                </form>
+            </li>
+            <li>
+                <my-button @click="updatePermissions">Update</my-button>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -28,39 +21,26 @@ export default {
     name: "UserEdit",
     data() {
         return {
-            user: {
+            permission: {
                 name: "",
-                email: "",
-            role: {
-                name
-             }
+                }
             }
-        }
     },
     created() {
         this.$store.dispatch('users/getRoles')
     },
     methods: {
-        updateUsers() {
+        updatePermissions() {
             axios
-                .put("/api/users/" + this.$route.params.id, {
-                    name: this.user.name,
-                    email: this.user.email,
-                    role: this.user.role.name
+                .put("/api/permissions/" + this.$route.params.id, {
+                    name: this.permission.name,
                 })
                 .then(res => {
-                    this.$router.push({name: "Dashboard"});
+                    this.$router.push({name: "Permissions"});
                 });
         },
 
     },
-    computed: {
-        getRoles: {
-            get() {
-                return this.$store.state.users.roleList
-            }
-        }
-    }
 }
 </script>
 

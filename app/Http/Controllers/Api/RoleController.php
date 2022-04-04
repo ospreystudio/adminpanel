@@ -33,7 +33,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -44,7 +44,28 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        {
+            $request->validate([
+                'name' => 'required',
+            ]);
+            $role = $this->role->create([
+                'name' => $request->name
+            ]);
+
+            activity()
+                ->performedOn(new Role())
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'name' => $request->name
+                ])
+                ->log('created');
+
+            if ($request->has('permissions')) {
+                $role->givePermissionTo(collect($request->permissions)->pluck('id')->toArray());
+            }
+
+            return response(['message' => 'Role Created']);
+        }
     }
 
     /**
@@ -55,7 +76,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -76,9 +97,32 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        {
+            {
+                $request->validate([
+                    'name' => 'required',
+                ]);
+                $role->update([
+                    'name'=> $request->name,
+                ]);
+
+                activity()
+                    ->performedOn(new Role())
+                    ->causedBy(auth()->user())
+                    ->withProperties([
+                        'name' => $request->name
+                    ])
+                    ->log('updated');
+
+                if ($request->has('permissions')) {
+                    $role->givePermissionTo(collect($request->permissions)->pluck('id')->toArray());
+                }
+
+                return response(['message' => 'Role Updated']);
+            }
+        }
     }
 
     /**
@@ -87,8 +131,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
     }
 }

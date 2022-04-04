@@ -3,6 +3,7 @@ import axios from '../../../axios/axios-instance'
 const state = {
     userList: [],
     roleList: [],
+    permissionsList: []
 }
 
 const actions = {
@@ -30,9 +31,41 @@ const actions = {
             console.log(error.response)
         })
     },
+    addPermission({}, permission) {
+        axios.post('/api/permissions', {
+            name: permission.name,
+        }) .then(response => {
+            if(response.data) {
+                window.location.replace("/user/permissions")
+                console.log(response)
+            }
+        }).catch((error) => {
+            console.log(error.response)
+        })
+    },
+    addRole({}, role) {
+        axios.post('/api/roles', {
+            name: role.name,
+        }) .then(response => {
+            if(response.data) {
+                window.location.replace("/user/management")
+                console.log(response)
+            }
+        }).catch((error) => {
+            console.log(error.response)
+        })
+    },
     getRoles(ctx) {
         axios.get('/api/roles').then(response => {
             ctx.commit('setRoleList', response.data.data)
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        });
+    },
+    getPermissions(ctx) {
+        axios.get('/api/permissions').then(response => {
+            ctx.commit('setPermissionsList', response.data.data)
             console.log(response)
         }).catch(error => {
             console.log(error)
@@ -48,6 +81,9 @@ const mutations = {
     },
     setRoleList(state, payload) {
         state.roleList = payload
+    },
+    setPermissionsList(state, payload) {
+        state.permissionsList = payload
     }
 }
 
@@ -57,6 +93,9 @@ const getters = {
     },
     roleList(state) {
         return state.roleList
+    },
+    permissionsList(state) {
+        return state.permissionsList
     }
 
 }

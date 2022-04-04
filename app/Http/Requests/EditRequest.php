@@ -25,6 +25,7 @@ class EditRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'role' => 'required|string|',
             'email' => ['required'],
         ];
     }
